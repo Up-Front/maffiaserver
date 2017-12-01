@@ -11,13 +11,13 @@ io.on("connection", socket => {
     const user = { id: socket.id, name: username };
     addUser(user);
     socket.emit('loggedIn', user);
+    console.log('USERS', users);
   });
 });
 
-
 function addUser(user) {
     users = [user, ...users];
-    console.log(`ADDED: ${user.id} ${user.name}`)
+    console.log(`ADDED: ${user.id} ${user.name}`);
 }
 
 server.listen(4200);
