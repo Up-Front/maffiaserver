@@ -12,12 +12,21 @@ io.on("connection", socket => {
         users.set(user);
         console.log("loggedIn", user.name);
         socket.emit('loggedIn', user);
+        console.log(users);
+        users.delete(user.id);
+        console.log(users);
         socket.broadcast.emit('usersUpdate', users);
     });
 
     socket.on("move", (user, pos) => {
         user.move(pos);
         console.log("moved", user.name, pos);
+        socket.broadcast.emit('usersUpdate', users);
+    });
+
+    socket.on("logout", (user) => {
+        user.remove(user.id);
+        console.log("removed", user.name);
         socket.broadcast.emit('usersUpdate', users);
     });
 
@@ -32,9 +41,12 @@ class Users {
         return this.users;
     }
 
-
     set(user) {
         this.users = [user, ...this.users];
+    }
+
+    delete(id) {
+        this.users = this.users.filter(user => user.id !== id);
     }
 }
 
