@@ -10,9 +10,14 @@ app.get("/", function(req, res) {
 
 io.on("connection", function(socket) {
   console.log("Client connected...");
-
-  io.on("join", function(data) {
+  socket.emit("messages", "Hello from server");
+  socket.on("join", function(data) {
     console.log("dd", data);
+  });
+
+  socket.on("sendmessage", data => {
+    console.log("received", data);
+    socket.emit("broadcast", data);
   });
 });
 

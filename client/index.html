@@ -10,13 +10,29 @@
 
 <body>
     dit is een test
+    <input id="text" type="text">
+    <button id="button">send</button>
     <script src="socket.io/socket.io.js"></script>
     <script> 
         var socket = io.connect('http://localhost:4200');
+        var text = document.getElementById("text");
+        var button = document.getElementById("button");
+
+        button.addEventListener("click", () => {
+            console.log('send', text.value);
+            socket.emit('sendmessage', text.value);
+        });
+
         socket.on('connect', function (data) {
             console.log('connected');
             socket.emit('join', 'Hello World from client');
         });
+
+        socket.on('broadcast', function (data) {
+            console.log('broadcast', data);
+        });
+
+
     </script>
 </body>
 
