@@ -6,32 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>UpFront Maffia</title>
+    <script src="socket.io/socket.io.js"></script>
 </head>
 
 <body>
-    dit is een test
-    <input id="text" type="text">
-    <button id="button">send</button>
-    <script src="socket.io/socket.io.js"></script>
-    <script> 
-        var socket = io.connect('http://localhost:4200');
-        var text = document.getElementById("text");
-        var button = document.getElementById("button");
+    <form class="login">
+        <input id="username" type="text" placeholder="username">
+        <input type="submit" id="login" value="login">
+    </form>
 
-        button.addEventListener("click", () => {
-            console.log('send', text.value);
-            socket.emit('sendmessage', text.value);
+    <script>
+        const socket = io.connect('http://192.168.1.16:4200');
+        const username = document.getElementById("username");
+        const login = document.getElementById("login");
+
+        login.addEventListener("click", () => {
+            console.log('login', username.value);
+            socket.emit('login', username.value);
         });
 
-        socket.on('connect', function (data) {
-            console.log('connected');
-            socket.emit('join', 'Hello World from client');
-        });
-
-        socket.on('broadcast', function (data) {
-            console.log('broadcast', data);
-        });
-
+//
+//        button.addEventListener("click", function() {
+//            console.log('send', text.value);
+//            socket.emit('sendmessage', text.value);
+//        });
+//
+//        socket.on('connect', function (data) {
+//            console.log('connected');
+//            socket.emit('join', 'Hello World from client');
+//        });
+//
+//        socket.on('broadcast', function (data) {
+//            console.log('broadcast', data);
+//        });
 
     </script>
 </body>

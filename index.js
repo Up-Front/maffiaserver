@@ -1,24 +1,32 @@
-var express = require("express");
-var app = express();
-var server = require("http").createServer(app);
-var io = require("socket.io")(server);
-var path = require("path");
+const express = require("express");
+const app = express();
+const server = require("http").createServer(app);
+const io = require("socket.io")(server);
+const path = require("path");
+let users = [];
 
-app.get("/", function(req, res) {
+app.get("/", (req, res) => {
   res.sendFile(path.resolve("./client/index.html"));
 });
 
-io.on("connection", function(socket) {
-  console.log("Client connected...");
-  socket.emit("messages", "Hello from server");
-  socket.on("join", function(data) {
-    console.log("dd", data);
+io.on("connection", (socket) => {
+  console.log("client connected");
+
+  socket.on("login", (username) => {
+    console.log("user '" + username + "' logged in");
+    users = [{
+      id: socket.id,
+      name: username
+    }, ...users];
+    console.log(users);
+    console.log(users.length);
+    console.log(users.find((item) => item.id === socket.id));
   });
 
-  socket.on("sendmessage", data => {
-    console.log("received", data);
-    socket.emit("broadcast", data);
-  });
+  // socket.on("sendmessage", function(data) {
+  //   console.log("received", data);
+  //   socket.broadcast.emit("broadcast", data);
+  // });
 });
 
 server.listen(4200);
