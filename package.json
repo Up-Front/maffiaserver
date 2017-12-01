@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack -w",
     "server": "nodemon index.js",
-    "client": "http-server ./client  -o",
+    "client": "http-server ./client  -o --url",
     "start": "run-p dev server client"
   },
   "repository": {
