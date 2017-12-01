@@ -2,30 +2,22 @@ const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
-const path = require("path");
 let users = [];
 
 io.on("connection", socket => {
   console.log("client connected");
 
-  socket.on("login", username => {
-    console.log("user '" + username + "' logged in");
-    users = [
-      {
-        id: socket.id,
-        name: username
-      },
-      ...users
-    ];
-    console.log(users);
-    console.log(users.length);
-    console.log(users.find(item => item.id === socket.id));
+  socket.on("login", (username) => {
+    const user = { id: socket.id, name: username };
+    addUser(user);
+    socket.emit('loggedIn', user);
   });
-
-  // socket.on("sendmessage", function(data) {
-  //   console.log("received", data);
-  //   socket.broadcast.emit("broadcast", data);
-  // });
 });
+
+
+function addUser(user) {
+    users = [user, ...users];
+    console.log(`ADDED: ${user.id} ${user.name}`)
+}
 
 server.listen(4200);
