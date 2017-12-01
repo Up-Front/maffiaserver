@@ -5,18 +5,22 @@ const io = require("socket.io")(server);
 
 io.on("connection", socket => {
     const users = new Users();
-  console.log("client connected");
+    console.log("client connected");
 
-  socket.on("login", (username) => {
-    const user = new User({
-        id: socket.id,
-        name: username,
+    socket.on("login", (username) => {
+        const user = new User({ id: socket.id,  name: username });
+        users.set(user);
+        console.log("loggedIn", user.name);
+        socket.emit('loggedIn', user);
+        socket.broadcast.emit('usersUpdate', users);
     });
 
-    users.set(user);
-    socket.emit('loggedIn', user);
-    console.log('USERS', users);
-  });
+    socket.on("move", (user, pos) => {
+        user.move(pos);
+        console.log("moved", user.name, pos);
+        socket.broadcast.emit('usersUpdate', users);
+    });
+
 });
 
 
@@ -27,11 +31,13 @@ class Users {
     get() {
         return this.users;
     }
+
+
     set(user) {
         this.users = [user, ...this.users];
-        console.log(`ADDED: ${user.id} ${user.name}`);
     }
 }
+
 class User {
     constructor(user) {
         this.id = user.id;
