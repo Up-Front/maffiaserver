@@ -7,7 +7,7 @@
     "dev": "webpack -w",
     "server": "nodemon index.js",
     "client": "http-server ./client  -o",
-    "start": "run-p server client"
+    "start": "run-p dev server client"
   },
   "repository": {
     "type": "git",
