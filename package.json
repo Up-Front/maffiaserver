@@ -4,7 +4,9 @@
   "description": "server with socket.io",
   "main": "index.js",
   "scripts": {
-    "start": "http-server ./client"
+    "server": "nodemon index.js",
+    "client": "http-server ./client  -o",
+    "start": "run-p server client"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,8 @@
   "dependencies": {
     "express": "^4.16.2",
     "http-server": "^0.10.0",
+    "nodemon": "^1.12.1",
+    "npm-run-all": "^4.1.2",
     "socket.io": "^2.0.4"
   }
 }
