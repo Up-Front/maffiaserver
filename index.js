@@ -5,22 +5,21 @@ const io = require("socket.io")(server);
 const path = require("path");
 let users = [];
 
-app.get("/", (req, res) => {
-  res.sendFile(path.resolve("./client/index.html"));
-});
-
-io.on("connection", (socket) => {
+io.on("connection", socket => {
   console.log("client connected");
 
-  socket.on("login", (username) => {
+  socket.on("login", username => {
     console.log("user '" + username + "' logged in");
-    users = [{
-      id: socket.id,
-      name: username
-    }, ...users];
+    users = [
+      {
+        id: socket.id,
+        name: username
+      },
+      ...users
+    ];
     console.log(users);
     console.log(users.length);
-    console.log(users.find((item) => item.id === socket.id));
+    console.log(users.find(item => item.id === socket.id));
   });
 
   // socket.on("sendmessage", function(data) {
