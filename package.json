@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "server with socket.io",
   "main": "index.js",
-  "scripts": {
-    "dev": "webpack-dev-server --content-base ./client"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Up-Front/maffiaserver.git"
@@ -19,11 +16,5 @@
   "dependencies": {
     "express": "^4.16.2",
     "socket.io": "^2.0.4"
-  },
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "webpack": "^3.9.1",
-    "webpack-dev-server": "^2.9.5"
   }
 }
