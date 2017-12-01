@@ -4,8 +4,10 @@
   "description": "server with socket.io",
   "main": "index.js",
   "scripts": {
-    "start": "http-server ./client",
-    "dev": "webpack -w"
+    "dev": "webpack -w",
+    "server": "nodemon index.js",
+    "client": "http-server ./client  -o",
+    "start": "run-p server client"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,9 @@
   "homepage": "https://github.com/Up-Front/maffiaserver#readme",
   "dependencies": {
     "express": "^4.16.2",
+    "http-server": "^0.10.0",
+    "nodemon": "^1.12.1",
+    "npm-run-all": "^4.1.2",
     "socket.io": "^2.0.4"
   },
   "devDependencies": {
