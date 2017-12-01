@@ -12,9 +12,6 @@ io.on("connection", socket => {
         users.set(user);
         console.log("loggedIn", user.name);
         socket.emit('loggedIn', user);
-        console.log(users);
-        users.delete(user.id);
-        console.log(users);
         socket.broadcast.emit('usersUpdate', users);
     });
 
